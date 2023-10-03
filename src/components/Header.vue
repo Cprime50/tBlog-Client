@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <router-link class="nav-link" aria-current="page" to="/">Thelsimpactconsulting</router-link>
+    <router-link class="nav-link red" aria-current="page" to="/">Thelsimpactconsulting</router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -10,6 +10,15 @@
         <li class="nav-item">
           <router-link class="nav-link active" aria-current="page" to="/">Home</router-link>
         </li>
+
+        <li class="nav-item">
+          <router-link class="nav-link active" to="/blogs">Blogs</router-link>
+        </li>
+
+         <li class="nav-item">
+          <router-link v-if="store.token !== ''" class="nav-link active" to="/admin">Admin</router-link>
+        </li>
+        
         <li class="nav-item">
           <router-link v-if="store.token == ''" class="nav-link" to="/login">Login</router-link>
           <a href="javascript:void(0);" v-else class="nav-link" @click="logout">Logout</a>
@@ -17,7 +26,8 @@
       </ul>
 
       <span class="navbar-text">
-          Welcome {{ store.user.first_name ?? ''}}
+          Welcome <div v-if="store.token !== ''">{{ store.user.first_name ?? ''}}</div>
+                  <div v-else>Guest</div>
       </span>
 
     </div>
@@ -28,6 +38,7 @@
 <script>
 import { store } from './store.js'
 import router from './../router/index.js'
+import Security from './security.js'
 
 export default {
   data() {
@@ -40,12 +51,8 @@ export default {
       const payload = {
         token: store.token,
       }
-      const requestOptions = {
-        method: "POST",
-        body: JSON.stringify(payload),
-      }
 
-      fetch("http://localhost:8082/users/logout", requestOptions)
+      fetch(process.env.VUE_APP_API_URL + "/users/logout", Security.requestOptions(payload))
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {

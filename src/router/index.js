@@ -1,3 +1,5 @@
+
+
 import { createRouter, createWebHistory } from 'vue-router'
 import Body from './../components/Body.vue'
 import Login from './../components/Login.vue'
@@ -7,6 +9,7 @@ import BlogsAdmin from './../components/BlogsAdmin.vue'
 import BlogEdit from './../components/BlogEdit.vue'
 import User from './../components/UserEdit.vue'
 import Users from './../components/Users.vue'
+import Admin from './../components/Admin.vue'
 
 const routes = [
     {
@@ -18,6 +21,11 @@ const routes = [
         path: '/login',
         name: 'Login',
         component: Login,
+    },
+    {
+        path: '/admin',
+        name: 'Admin',
+        component: Admin,
     },
     {
         path: '/blogs',
@@ -45,7 +53,7 @@ const routes = [
         component: Users,
     },
     {
-        path: '/admin/users/:userid',
+        path: '/admin/users/:userId',
         name: 'User',
         component: User,
     },

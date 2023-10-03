@@ -11,7 +11,7 @@ import Header from "./components/Header.vue"
 import Footer from "./components/Footer.vue"
 import { store } from './components/store.js'
 
-// read through cookies find  a particuler cookie and return else if that cookie doesnt exist return empty string
+// read through cookies find  a particuler cookie and return, else if that cookie doesnt exist return empty string
 const getCookie = (name) => {
   return document.cookie.split("; ").reduce((r, v) => {
     const parts = v.split("=");
@@ -48,27 +48,6 @@ export default {
       }
     }
   },
-  mounted() {
-    const payload = {
-      foo: "bar",
-    }
-
-    // const headers = new Headers();
-    // headers.append("Content-Type", "application/json");
-    // headers.append("Authorization", "Bearer " + store.token);
-
-    const requestOptions = {
-      method: "POST",
-      body: JSON.stringify(payload),
-      //headers: headers,
-    }
-
-    fetch("http://localhost:8082/admin/foo", requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    })
-  }
 }
 </script>
 
